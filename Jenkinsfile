@@ -5,6 +5,7 @@ pipeline {
         VENV_PATH = '/var/jenkins_home/venv'
         FLASK_APP = 'workspace/flask/app.py'  // Correct path to the Flask app
         PATH = "$VENV_PATH/bin:$PATH"
+        NVD_API_KEY = credentials('NVD_API_KEY') // Use the ID you gave to the credential
         SONARQUBE_SCANNER_HOME = tool name: 'SonarQube Scanner'
         SONARQUBE_TOKEN = 'squ_f232ec3f91f102968c5b62dc7dc67c3d8e3901e1'  // Set your new SonarQube token here
         DEPENDENCY_CHECK_HOME = '/var/jenkins_home/tools/org.jenkinsci.plugins.DependencyCheck.tools.DependencyCheckInstallation/OWASP_Dependency-Check/dependency-check'
@@ -52,7 +53,7 @@ pipeline {
                     sh 'echo "Dependency Check Home: $DEPENDENCY_CHECK_HOME"'
                     sh 'ls -l $DEPENDENCY_CHECK_HOME/bin'
                     sh '''
-                    ${DEPENDENCY_CHECK_HOME}/bin/dependency-check.sh --project "Flask App" --scan . --format "ALL" --out workspace/flask/dependency-check-report || true
+                    ${DEPENDENCY_CHECK_HOME}/bin/dependency-check.sh --project "Flask App" --scan . --format "ALL" --nvdApiKey $NVD_API_KEY' --out workspace/flask/dependency-check-report || true
                     '''
                 }
             }
@@ -135,6 +136,9 @@ pipeline {
     }
     
     post {
+        success {
+            dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+        }
         failure {
             script {
                 echo 'Build failed, not deploying Flask app.'
