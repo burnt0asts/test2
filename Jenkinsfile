@@ -20,18 +20,20 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 dir('workspace') {
-                    git branch: 'main', url: 'https://github.com/burnt0asts/test2.git'
+                    git branch: 'main', url: 'https://github.com/burnt0asts/test.git'
                 }
             }
         }
         
         stage('Setup Virtual Environment') {
-            steps {
-                dir('workspace/flask') {
-                    sh 'python3 -m venv $VENV_PATH'
-                }
-            }
+    		steps {
+        		dir('workspace/flask') {
+            			sh 'python3 -m venv $VENV_PATH'
+            			sh 'ls -l $VENV_PATH'
         }
+    }
+}
+
         
         stage('Activate Virtual Environment and Install Dependencies') {
             steps {
