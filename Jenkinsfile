@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     environment {
-        VENV_PATH = 'venv'
+        #VENV_PATH = 'venv'
+        VENV_PATH = '/var/jenkins_home/venv'
         FLASK_APP = 'workspace/flask/app.py'  // Correct path to the Flask app
         PATH = "$VENV_PATH/bin:$PATH"
         SONARQUBE_SCANNER_HOME = tool name: 'SonarQube Scanner'
@@ -26,14 +27,12 @@ pipeline {
         }
         
         stage('Setup Virtual Environment') {
-    		steps {
-        		dir('workspace/flask') {
-            			sh 'python3 -m venv $VENV_PATH'
-            			sh 'ls -l $VENV_PATH'
-   	     			}
-    			}
-		}
-
+            steps {
+                script {
+                sh 'python3 -m venv workspace/flask/venv'
+                }
+            }
+}
         
         stage('Activate Virtual Environment and Install Dependencies') {
  	   steps {
