@@ -105,6 +105,7 @@ pipeline {
                 withSonarQubeEnv('SonarQube') {
                     dir('workspace/flask') {
                         sh '''
+                        echo "Starting SonarQube analysis..."
                         ${SONARQUBE_SCANNER_HOME}/bin/sonar-scanner \
                         -Dsonar.projectKey=flask-app \
                         -Dsonar.sources=. \
