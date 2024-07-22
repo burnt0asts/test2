@@ -141,7 +141,7 @@ pipeline {
             }
         }
         always {
-            archiveArtifacts artifacts: 'workspace/flask/dependency-check-report/dependency-check-report.xml', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'workspace/flask/dependency-check-report/*.*', allowEmptyArchive: true
             archiveArtifacts artifacts: 'workspace/flask/integration-test-results.xml', allowEmptyArchive: true
         }
     }
