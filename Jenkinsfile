@@ -30,18 +30,20 @@ pipeline {
         		dir('workspace/flask') {
             			sh 'python3 -m venv $VENV_PATH'
             			sh 'ls -l $VENV_PATH'
-        }
-    }
-}
+   	     			}
+    			}
+		}
 
         
         stage('Activate Virtual Environment and Install Dependencies') {
-            steps {
-                dir('workspace/flask') {
-                    sh '. $VENV_PATH/bin/activate && pip install -r requirements.txt'
-                }
-            }
-        }
+ 	   steps {
+  	      dir('workspace/flask') {
+  	          		sh '. $VENV_PATH/bin/activate && python --version'
+        	    		sh '. $VENV_PATH/bin/activate && pip install -r requirements.txt'
+        			}
+    		}
+	}
+
         
         stage('Dependency Check') {
             steps {
