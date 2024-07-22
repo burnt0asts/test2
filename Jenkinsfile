@@ -136,9 +136,6 @@ pipeline {
     }
     
     post {
-        success {
-            dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-        }
         failure {
             script {
                 echo 'Build failed, not deploying Flask app.'
