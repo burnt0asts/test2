@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        #VENV_PATH = 'venv'
         VENV_PATH = '/var/jenkins_home/venv'
         FLASK_APP = 'workspace/flask/app.py'  // Correct path to the Flask app
         PATH = "$VENV_PATH/bin:$PATH"
