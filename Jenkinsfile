@@ -53,7 +53,7 @@ pipeline {
                     sh 'echo "Dependency Check Home: $DEPENDENCY_CHECK_HOME"'
                     sh 'ls -l $DEPENDENCY_CHECK_HOME/bin'
                     sh '''
-                    ${DEPENDENCY_CHECK_HOME}/bin/dependency-check.sh --project "Flask App" --scan . --format "ALL" --nvdApiKey $NVD_API_KEY' --out workspace/flask/dependency-check-report || true
+                    ${DEPENDENCY_CHECK_HOME}/bin/dependency-check.sh --project "Flask App" --scan . --format HTML --format XML --format HTML --nvdApiKey $NVD_API_KEY'  || true
                     '''
                 }
             }
